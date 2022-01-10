@@ -7,9 +7,11 @@
 (function() {
   "use strict";
 
+
   /**
    * Easy selector helper function
    */
+  
   const select = (el, all = false) => {
     el = el.trim()
     if (all) {
@@ -57,8 +59,73 @@
       }
     })
   }
+  
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
+
+  
+  let langActive = select('.languages');
+  let lang = select('#topbar .languages a',true);
+  let logo = select('.logo');
+  let welcome =document.getElementById('welcome')
+  let provide = document.getElementById('provide')
+  let driedFruit = document.createElement('span')
+  let buttons = select(".btns a",true);
+  lang.forEach(el =>{
+    el.addEventListener('click',() => {
+      langActive?.querySelector('.active')?.classList.remove('active')
+      el.classList.add('active');
+      const att = el.getAttribute('language')
+      logo.textContent = data[att].logo
+      welcome.textContent = data[att].welcome
+      driedFruit.textContent = data[att].driedFruit
+      welcome.appendChild(driedFruit)
+      
+      provide.textContent = data[att].provide
+      navbarlinks.forEach(navbarlink =>{
+        navbarlink.textContent = data[att][navbarlink.getAttribute('navAttribute')];
+        
+     })
+
+     buttons[0].textContent = data[att].ourproducts;
+     buttons[1].textContent = data[att].contactus;
+      
+    })
+  });
+
+  let data = {
+    "english":{
+      "logo":"Asia Organic",
+      "welcome":'Welcome to the world of ',
+      "provide":"Providing the highest quality dried fruits in Kyrgyzstan",
+      "driedFruit":"Dried Fruits",
+      "home":"Home",
+      "about":"About",
+      "product":"Our Products",
+      "benefits":"Benefits",
+      "gallery":"Gallery",
+      "contact":"Contact",
+      "ourproducts":"Our products",
+      "contactus":"Contact us"
+
+    },
+    "russian":{
+      "logo":"Азия Органик",
+      "welcome":"Добро пожаловать в мир ",
+      "provide":"представляет высоко качественных сухофруктов в Кыргызстане",
+      "driedFruit":"Сухофруктов",
+      "home":"Главный",
+      "about":"О нас",
+      "product":"Продукты",
+      "benefits":"Полезности",
+      "gallery":"Галлерея",
+      "contact":"Контакты",
+      "ourproducts":"продукты",
+      "contactus":"контакты"
+    }
+
+  }
+
 
   /**
    * Scrolls to an element with header offset
